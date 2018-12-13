@@ -1,0 +1,15 @@
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\Demo.exe.config
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\obj\Release\Demo.Properties.Resources.resources
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\obj\Release\Demo.csproj.GenerateResource.Cache
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\Demo.exe
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\Demo.pdb
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\SharpGL.pdb
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\SharpGL.xml
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\SharpGL.SceneGraph.pdb
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\SharpGL.SceneGraph.xml
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\SharpGL.WinForms.pdb
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\bin\Release\SharpGL.WinForms.xml
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\obj\Release\Demo.csprojResolveAssemblyReference.cache
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\obj\Release\Demo.exe
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\obj\Release\Demo.pdb
+E:\My folder\ĐHMT\BTTH_Cuoi Ky\Demo\Demo\obj\Release\Demo.Form1.resources
