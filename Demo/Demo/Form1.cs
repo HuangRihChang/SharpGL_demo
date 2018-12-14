@@ -218,6 +218,7 @@ namespace Demo
             rotateXTrackbar.Value = (int)rtmp[0];
             scaleXTrackbar.Value = (int)(stmp[0] * 100);
             transXTextBox.Text = ((int)ttmp[0]).ToString();
+            //invalidate drawitem
             GeometriesListBox.Invalidate();
         }
 

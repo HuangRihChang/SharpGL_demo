@@ -9,7 +9,7 @@ namespace Demo
 {
     class SceneGrid
     {
-        private int n = 10;
+        private int n;
         public SceneGrid(int numoflines) { n = numoflines;}
 
         public void drawSceneGrid(OpenGL gl)

@@ -79,8 +79,8 @@ namespace Demo
 
             //Thực hiện các hàm biến đổi Affine
             gl.Translate(this.Translate[0], this.Translate[1], this.Translate[2]);
-            gl.Rotate(this.Rotate[0], this.Rotate[1], this.Rotate[2]);
             gl.Scale(this.Scale[0], this.Scale[1], this.Scale[2]);
+            gl.Rotate(this.Rotate[0], this.Rotate[1], this.Rotate[2]);
 
 
             for (int i = 0; i < 2; i++)
@@ -171,8 +171,8 @@ namespace Demo
 
             //Thực hiện các hàm biến đổi Affine
             gl.Translate(this.Translate[0], this.Translate[1], this.Translate[2]);
-            gl.Rotate(this.Rotate[0], this.Rotate[1], this.Rotate[2]);
             gl.Scale(this.Scale[0], this.Scale[1], this.Scale[2]);
+            gl.Rotate(this.Rotate[0], this.Rotate[1], this.Rotate[2]);
 
             //Hàm vẽ các mặt của ảnh
             
@@ -267,8 +267,8 @@ namespace Demo
 
             //Thực hiện các hàm biến đổi Affine
             gl.Translate(this.Translate[0], this.Translate[1], this.Translate[2]);
-            gl.Rotate(this.Rotate[0], this.Rotate[1], this.Rotate[2]);
             gl.Scale(this.Scale[0], this.Scale[1], this.Scale[2]);
+            gl.Rotate(this.Rotate[0], this.Rotate[1], this.Rotate[2]);
 
             for (int i = 0; i < 2; i++)
             {
