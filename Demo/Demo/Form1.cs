@@ -15,6 +15,7 @@ namespace Demo
 
     public partial class Form1 : Form
     {
+        const float PI = (float)3.14159265359;
         bool isLoading = false;
 
         float[] cameraPosition = new float[3] { 5, 5, 5 };
@@ -303,6 +304,8 @@ namespace Demo
 
         private void openGLControl1_KeyDown(object sender, KeyEventArgs e)
         {
+            float alpha = ((float)2.0 / 180) * PI;
+
             if (e.KeyData == Keys.Z)
             {
                 cameraAngle -= (float)10.0;
@@ -320,24 +323,89 @@ namespace Demo
 
             if (e.KeyData == Keys.A)
             {
-                float alpha = -0.1f;
-                float x = cameraPosition[0];
-                float y = cameraPosition[1];
-                cameraPosition[0] = (float)(x * Math.Cos(alpha) - y * Math.Sin(alpha));
+                alpha = -alpha;
+
+                //translate to O
+                float x = cameraPosition[0] - viewPosition[0];
+                float y = cameraPosition[1] - viewPosition[1];
+
+                //rotate alpha around Oz
+                cameraPosition[0] = (float)(x* Math.Cos(alpha) - y* Math.Sin(alpha));
                 cameraPosition[1] = (float)(x * Math.Sin(alpha) + y * Math.Cos(alpha));
+
+                //translate to orginal position
+                cameraPosition[0] = cameraPosition[0] + viewPosition[0];
+                cameraPosition[1] = cameraPosition[1] + viewPosition[1];
+
                 camXTextBox.Text = (cameraPosition[0]).ToString();
                 camYTextBox.Text = (cameraPosition[1]).ToString();
             }
 
             if (e.KeyData == Keys.D)
             {
-                float alpha = 0.1f;
-                float x = cameraPosition[0];
-                float y = cameraPosition[1];
-                cameraPosition[0] = (float)((x - viewPosition[0]) * Math.Cos(alpha) - (y - viewPosition[1]) * Math.Sin(alpha));
-                cameraPosition[1] = (float)((x - viewPosition[0]) * Math.Sin(alpha) + (y - viewPosition[1]) * Math.Cos(alpha));
+                //translate to O
+                float x = cameraPosition[0] - viewPosition[0];
+                float y = cameraPosition[1] - viewPosition[1];
+
+                //rotate alpha around Oz
+                cameraPosition[0] = (float)(x * Math.Cos(alpha) - y * Math.Sin(alpha));
+                cameraPosition[1] = (float)(x * Math.Sin(alpha) + y * Math.Cos(alpha));
+
+                //translate to orginal position
+                cameraPosition[0] = cameraPosition[0] + viewPosition[0];
+                cameraPosition[1] = cameraPosition[1] + viewPosition[1];
+
                 camXTextBox.Text = (cameraPosition[0]).ToString();
                 camYTextBox.Text = (cameraPosition[1]).ToString();
+            }
+
+            if (e.KeyData == Keys.W)
+            {
+                float x = cameraPosition[0];
+                float y = cameraPosition[1];
+                double theta = Math.Atan(x / y);
+                Console.WriteLine(theta);
+                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(theta) - (y - viewPosition[1]) * Math.Sin(theta)) + viewPosition[0]);
+                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(theta) + (y - viewPosition[1]) * Math.Cos(theta)) + viewPosition[1]);
+
+                y = cameraPosition[1];
+                float z = cameraPosition[2];
+                cameraPosition[1] = (float)(((y - viewPosition[1]) * Math.Cos(alpha) - (z - viewPosition[2]) * Math.Sin(alpha)) + viewPosition[1]);
+                cameraPosition[2] = (float)(((y - viewPosition[1]) * Math.Sin(alpha) + (z - viewPosition[2]) * Math.Cos(alpha)) + viewPosition[2]);
+
+                x = cameraPosition[0];
+                y = cameraPosition[1];
+                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(-theta) - (y - viewPosition[1]) * Math.Sin(-theta)) + viewPosition[0]);
+                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(-theta) + (y - viewPosition[1]) * Math.Cos(-theta)) + viewPosition[1]);
+
+                camXTextBox.Text = (cameraPosition[0]).ToString();
+                camYTextBox.Text = (cameraPosition[1]).ToString();
+                camZTextBox.Text = (cameraPosition[2]).ToString();
+            }
+            if (e.KeyData == Keys.S)
+            {
+                alpha = -alpha;
+
+                float x = cameraPosition[0];
+                float y = cameraPosition[1];
+                double theta = Math.Atan(x / y);
+                Console.WriteLine(theta);
+                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(theta) - (y - viewPosition[1]) * Math.Sin(theta)) + viewPosition[0]);
+                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(theta) + (y - viewPosition[1]) * Math.Cos(theta)) + viewPosition[1]);
+
+                y = cameraPosition[1];
+                float z = cameraPosition[2];
+                cameraPosition[1] = (float)(((y - viewPosition[1]) * Math.Cos(alpha) - (z - viewPosition[2]) * Math.Sin(alpha)) + viewPosition[1]);
+                cameraPosition[2] = (float)(((y - viewPosition[1]) * Math.Sin(alpha) + (z - viewPosition[2]) * Math.Cos(alpha)) + viewPosition[2]);
+
+                x = cameraPosition[0];
+                y = cameraPosition[1];
+                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(-theta) - (y - viewPosition[1]) * Math.Sin(-theta)) + viewPosition[0]);
+                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(-theta) + (y - viewPosition[1]) * Math.Cos(-theta)) + viewPosition[1]);
+
+                camXTextBox.Text = (cameraPosition[0]).ToString();
+                camYTextBox.Text = (cameraPosition[1]).ToString();
+                camZTextBox.Text = (cameraPosition[2]).ToString();
             }
         }
 
