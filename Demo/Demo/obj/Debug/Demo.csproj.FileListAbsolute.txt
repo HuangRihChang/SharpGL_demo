@@ -95,3 +95,23 @@ E:\My folder\ĐHMT\BTTH_Cuoi Ky\SharpGL_demo\Demo\Demo\obj\Debug\Demo.csprojReso
 E:\My folder\ĐHMT\BTTH_Cuoi Ky\SharpGL_demo\Demo\Demo\obj\Debug\Demo.Form1.resources
 E:\My folder\ĐHMT\BTTH_Cuoi Ky\SharpGL_demo\Demo\Demo\obj\Debug\Demo.Properties.Resources.resources
 E:\My folder\ĐHMT\BTTH_Cuoi Ky\SharpGL_demo\Demo\Demo\obj\Debug\Demo.csproj.GenerateResource.Cache
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.csprojAssemblyReference.cache
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.Form1.resources
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.Properties.Resources.resources
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.csproj.GenerateResource.cache
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.csproj.CoreCompileInputs.cache
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\Demo.exe.config
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\Demo.exe
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\Demo.pdb
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.dll
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.SceneGraph.dll
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.WinForms.dll
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.pdb
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.xml
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.SceneGraph.pdb
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.SceneGraph.xml
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.WinForms.pdb
+D:\repo\SharpGL_demo\Demo\Demo\bin\Debug\SharpGL.WinForms.xml
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.csproj.CopyComplete
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.exe
+D:\repo\SharpGL_demo\Demo\Demo\obj\Debug\Demo.pdb

@@ -10,6 +10,10 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Globalization;
 
+using SharpGL.SceneGraph.Assets;
+using SharpGL.SceneGraph.Lighting;
+using SharpGL.SceneGraph;
+
 namespace Demo
 {
 
@@ -29,6 +33,8 @@ namespace Demo
         private int SelectedIndex = 0;
         private int PreSelectedIndex = 0;
 
+        Texture tex;
+
         public Form1()
         {
             Geometries = new List<Geometry>();
@@ -37,6 +43,16 @@ namespace Demo
             countLabels.Text = Geometries.Count().ToString();
             gridSizeTextBox.Text = GridSize.ToString();
             GeometriesListBox.DrawMode = DrawMode.OwnerDrawFixed;
+
+            //  Get the OpenGL object, for quick access.
+            OpenGL gl = openGLControl1.OpenGL;
+
+            //  A bit of extra initialisation here, we have to enable textures.
+            gl.Enable(OpenGL.GL_TEXTURE_2D);
+
+            //  Create our texture object from a file. This creates the texture for OpenGL.
+            tex = new Texture();
+            //tex.Create(gl, "D:\\a.bmp");
         }
 
         private void Enable(bool notzero)
@@ -125,7 +141,7 @@ namespace Demo
         private void drawGeometries(OpenGL gl)
         {
             for (int i = 0; i < Geometries.Count(); i++)
-                Geometries[i].Draw(gl);
+                Geometries[i].Draw(gl,tex);
 
             switch (GeometryType)
             {
@@ -359,22 +375,25 @@ namespace Demo
 
             if (e.KeyData == Keys.W)
             {
-                float x = cameraPosition[0];
-                float y = cameraPosition[1];
+                float x = cameraPosition[0] - viewPosition[0];
+                float y = cameraPosition[1] - viewPosition[1];
+                float z = cameraPosition[2] - viewPosition[2];
+
                 double theta = Math.Atan(x / y);
-                Console.WriteLine(theta);
-                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(theta) - (y - viewPosition[1]) * Math.Sin(theta)) + viewPosition[0]);
-                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(theta) + (y - viewPosition[1]) * Math.Cos(theta)) + viewPosition[1]);
 
-                y = cameraPosition[1];
-                float z = cameraPosition[2];
-                cameraPosition[1] = (float)(((y - viewPosition[1]) * Math.Cos(alpha) - (z - viewPosition[2]) * Math.Sin(alpha)) + viewPosition[1]);
-                cameraPosition[2] = (float)(((y - viewPosition[1]) * Math.Sin(alpha) + (z - viewPosition[2]) * Math.Cos(alpha)) + viewPosition[2]);
+                float x_oz = (float)(x * Math.Cos(theta) - y * Math.Sin(theta));
+                float y_oz = (float)(x * Math.Sin(theta) + y * Math.Cos(theta));
 
-                x = cameraPosition[0];
-                y = cameraPosition[1];
-                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(-theta) - (y - viewPosition[1]) * Math.Sin(-theta)) + viewPosition[0]);
-                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(-theta) + (y - viewPosition[1]) * Math.Cos(-theta)) + viewPosition[1]);
+
+                float y_ox = (float)(y_oz * Math.Cos(alpha) - z * Math.Sin(alpha));
+                float z_ox = (float)(y_oz * Math.Sin(alpha) + z * Math.Cos(alpha));
+
+                float x_ = (float)(x_oz * Math.Cos(-theta) - y_ox * Math.Sin(-theta));
+                float y_ = (float)(x_oz * Math.Sin(-theta) + y_ox * Math.Cos(-theta));
+
+                cameraPosition[0] = x_ + viewPosition[0];
+                cameraPosition[1] = y_ + viewPosition[1];
+                cameraPosition[2] = z_ox + viewPosition[2];
 
                 camXTextBox.Text = (cameraPosition[0]).ToString();
                 camYTextBox.Text = (cameraPosition[1]).ToString();
@@ -384,22 +403,25 @@ namespace Demo
             {
                 alpha = -alpha;
 
-                float x = cameraPosition[0];
-                float y = cameraPosition[1];
+                float x = cameraPosition[0] - viewPosition[0];
+                float y = cameraPosition[1] - viewPosition[1];
+                float z = cameraPosition[2] - viewPosition[2];
+
                 double theta = Math.Atan(x / y);
-                Console.WriteLine(theta);
-                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(theta) - (y - viewPosition[1]) * Math.Sin(theta)) + viewPosition[0]);
-                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(theta) + (y - viewPosition[1]) * Math.Cos(theta)) + viewPosition[1]);
 
-                y = cameraPosition[1];
-                float z = cameraPosition[2];
-                cameraPosition[1] = (float)(((y - viewPosition[1]) * Math.Cos(alpha) - (z - viewPosition[2]) * Math.Sin(alpha)) + viewPosition[1]);
-                cameraPosition[2] = (float)(((y - viewPosition[1]) * Math.Sin(alpha) + (z - viewPosition[2]) * Math.Cos(alpha)) + viewPosition[2]);
+                float x_oz = (float)(x * Math.Cos(theta) - y * Math.Sin(theta));
+                float y_oz = (float)(x * Math.Sin(theta) + y * Math.Cos(theta));
 
-                x = cameraPosition[0];
-                y = cameraPosition[1];
-                cameraPosition[0] = (float)(((x - viewPosition[0]) * Math.Cos(-theta) - (y - viewPosition[1]) * Math.Sin(-theta)) + viewPosition[0]);
-                cameraPosition[1] = (float)(((x - viewPosition[0]) * Math.Sin(-theta) + (y - viewPosition[1]) * Math.Cos(-theta)) + viewPosition[1]);
+
+                float y_ox = (float)(y_oz * Math.Cos(alpha) - z * Math.Sin(alpha));
+                float z_ox = (float)(y_oz * Math.Sin(alpha) + z * Math.Cos(alpha));
+
+                float x_ = (float)(x_oz * Math.Cos(-theta) - y_ox * Math.Sin(-theta));
+                float y_ = (float)(x_oz * Math.Sin(-theta) + y_ox * Math.Cos(-theta));
+
+                cameraPosition[0] = x_ + viewPosition[0];
+                cameraPosition[1] = y_ + viewPosition[1];
+                cameraPosition[2] = z_ox + viewPosition[2];
 
                 camXTextBox.Text = (cameraPosition[0]).ToString();
                 camYTextBox.Text = (cameraPosition[1]).ToString();
@@ -521,6 +543,22 @@ namespace Demo
             }
             else
                 e.Graphics.DrawString(GeometriesListBox.Items[e.Index].ToString(), new Font("Microsoft Sans Serif", 8, FontStyle.Regular), Brushes.Black, e.Bounds);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //  Show a file open dialog.
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //  Destroy the existing texture.
+                tex.Destroy(openGLControl1.OpenGL);
+
+                //  Create a new texture.
+                tex.Create(openGLControl1.OpenGL, openFileDialog1.FileName);
+
+                //  Redraw.
+                openGLControl1.Invalidate();
+            }
         }
     }
 }

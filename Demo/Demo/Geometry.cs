@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using SharpGL;
 
+using SharpGL.SceneGraph.Assets;
+using SharpGL.SceneGraph.Lighting;
+using SharpGL.SceneGraph;
 
 namespace Demo
 {
@@ -58,7 +61,7 @@ namespace Demo
         public float[] GetRotate() { return Rotate; }
         public float[] GetScale() { return Scale;}
 
-        public virtual int Draw(OpenGL gl) { return 0; }
+        public virtual int Draw(OpenGL gl, Texture tex) { return 0; }
         public virtual float GetLength() { return 0; }
         public virtual float GetHeight() { return 0; }
         public virtual void SetLength(float length) {}
@@ -70,7 +73,7 @@ namespace Demo
         private float Length;
         public Cube(Color color, float length) : base(color) { Length = length; }
 
-        public override int Draw(OpenGL gl)
+        public override int Draw(OpenGL gl, Texture tex)
         {
 
             float a = this.Length / 2;
@@ -106,37 +109,38 @@ namespace Demo
                     gl.Color(Color.R, Color.G, Color.B);
                 }
 
+                tex.Bind(gl);
                 //Hàm vẽ các mặt của ảnh
                 gl.Begin(OpenGL.GL_QUADS);
-                gl.Vertex(a, a, a);    // Top Right Of The Quad (Top)
-                gl.Vertex(a, a, -a);    // Top Left Of The Quad (Top)
-                gl.Vertex(-a, a, -a);    // Bottom Left Of The Quad (Top)
-                gl.Vertex(-a, a, a);    // Bottom Right Of The Quad (Top)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, a, a);    // Top Right Of The Quad (Top)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, a, -a);    // Top Left Of The Quad (Top)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(-a, a, -a);    // Bottom Left Of The Quad (Top)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(-a, a, a);    // Bottom Right Of The Quad (Top)
 
-                gl.Vertex(a, -a, a);    // Top Right Of The Quad (Bottom)
-                gl.Vertex(a, -a, -a);    // Top Left Of The Quad (Bottom)
-                gl.Vertex(-a, -a, -a);    // Bottom Left Of The Quad (Bottom)
-                gl.Vertex(-a, -a, a);    // Bottom Right Of The Quad (Bottom)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, -a, a);    // Top Right Of The Quad (Bottom)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, -a, -a);    // Top Left Of The Quad (Bottom)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(-a, -a, -a);    // Bottom Left Of The Quad (Bottom)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(-a, -a, a);    // Bottom Right Of The Quad (Bottom)
 
-                gl.Vertex(a, a, a);    // Top Right Of The Quad (Front)
-                gl.Vertex(a, a, -a);    // Top Left Of The Quad (Front)
-                gl.Vertex(a, -a, -a);    // Bottom Left Of The Quad (Front)
-                gl.Vertex(a, -a, a);    // Bottom Right Of The Quad (Front)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, a, a);    // Top Right Of The Quad (Front)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, a, -a);    // Top Left Of The Quad (Front)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(a, -a, -a);    // Bottom Left Of The Quad (Front)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(a, -a, a);    // Bottom Right Of The Quad (Front)
 
-                gl.Vertex(-a, a, a);    // Top Right Of The Quad (Back)
-                gl.Vertex(-a, a, -a);    // Top Left Of The Quad (Back)
-                gl.Vertex(-a, -a, -a);    // Bottom Left Of The Quad (Back)
-                gl.Vertex(-a, -a, a);    // Bottom Right Of The Quad (Back)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(-a, a, a);    // Top Right Of The Quad (Back)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(-a, a, -a);    // Top Left Of The Quad (Back)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(-a, -a, -a);    // Bottom Left Of The Quad (Back)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(-a, -a, a);    // Bottom Right Of The Quad (Back)
 
-                gl.Vertex(a, a, a);    // Top Right Of The Quad (Left)
-                gl.Vertex(-a, a, a);    // Top Left Of The Quad (Left)
-                gl.Vertex(-a, -a, a);    // Bottom Left Of The Quad (Left)
-                gl.Vertex(a, -a, a);    // Bottom Right Of The Quad (Left)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, a, a);    // Top Right Of The Quad (Left)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(-a, a, a);    // Top Left Of The Quad (Left)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(-a, -a, a);    // Bottom Left Of The Quad (Left)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(a, -a, a);    // Bottom Right Of The Quad (Left)
 
-                gl.Vertex(-a, a, -a);    // Top Right Of The Quad (Right)
-                gl.Vertex(a, a, -a);    // Top Left Of The Quad (Right)
-                gl.Vertex(a, -a, -a);    // Bottom Left Of The Quad (Right)
-                gl.Vertex(-a, -a, -a);    // Bottom
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(-a, a, -a);    // Top Right Of The Quad (Right)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, a, -a);    // Top Left Of The Quad (Right)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(a, -a, -a);    // Bottom Left Of The Quad (Right)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(-a, -a, -a);    // Bottom
 
                 gl.End();
             }
@@ -161,7 +165,7 @@ namespace Demo
             Height = height;
         }
 
-        public override int Draw(OpenGL gl)
+        public override int Draw(OpenGL gl, Texture tex)
         {
 
             float a = this.Length / 2;
@@ -202,33 +206,33 @@ namespace Demo
                 gl.Begin(OpenGL.GL_QUADS);
 
                 //BOT
-                gl.Vertex(a, a, -h);    // Top Right Of The Quad (Bottom)
-                gl.Vertex(a, -a, -h);    // Top Left Of The Quad (Bottom)
-                gl.Vertex(-a, -a, -h);    // Bottom Left Of The Quad (Bottom)
-                gl.Vertex(-a, a, -h);    // Bottom Right Of The Quad (Bottom)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, a, -h);    // Top Right Of The Quad (Bottom)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, -a, -h);    // Top Left Of The Quad (Bottom)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(-a, -a, -h);    // Bottom Left Of The Quad (Bottom)
+                gl.TexCoord(0.0f, 1.0f); gl.Vertex(-a, a, -h);    // Bottom Right Of The Quad (Bottom)
                 gl.End();
 
                 gl.Begin(OpenGL.GL_TRIANGLES);
 
                 //FRONT
-                gl.Vertex(a, -a, -h);    // Top Right Of The Quad (Front)
-                gl.Vertex(a, a, -h);    // Top Left Of The Quad (Front)
-                gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Front)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, -a, -h);    // Top Right Of The Quad (Front)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, a, -h);    // Top Left Of The Quad (Front)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Front)
 
                 //BACK
-                gl.Vertex(-a, a, -h);    // Top Right Of The Quad (Back)
-                gl.Vertex(-a, -a, -h);    // Top Left Of The Quad (Back)
-                gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Back)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(-a, a, -h);    // Top Right Of The Quad (Back)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(-a, -a, -h);    // Top Left Of The Quad (Back)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Back)
 
                 ////LEFT
-                gl.Vertex(a, -a, -h);    // Top Right Of The Quad (Left)
-                gl.Vertex(-a, -a, -h);    // Top Left Of The Quad (Left)
-                gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Left)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(a, -a, -h);    // Top Right Of The Quad (Left)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(-a, -a, -h);    // Top Left Of The Quad (Left)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Left)
 
                 ////RIGHT
-                gl.Vertex(-a, a, -h);    // Top Right Of The Quad (Right)
-                gl.Vertex(a, a, -h);    // Top Left Of The Quad (Right)
-                gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Right)
+                gl.TexCoord(0.0f, 0.0f); gl.Vertex(-a, a, -h);    // Top Right Of The Quad (Right)
+                gl.TexCoord(1.0f, 0.0f); gl.Vertex(a, a, -h);    // Top Left Of The Quad (Right)
+                gl.TexCoord(1.0f, 1.0f); gl.Vertex(0, 0, h);    // Bottom Left Of The Quad (Right)
                 gl.End();
             }
 
@@ -256,7 +260,7 @@ namespace Demo
             Height = height;
         }
 
-        public override int Draw(OpenGL gl)
+        public override int Draw(OpenGL gl, Texture tex)
         {
             float h = this.Height / 2;
             float e_dx = this.Length * (float)Math.Sqrt(3.0) / 3;
