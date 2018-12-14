@@ -32,10 +32,7 @@ namespace Demo
             Scale = new float[3] { 1, 1, 1 };
         }
 
-        public void setColor(Color chosenColor)
-        {
-            Color = chosenColor;
-        }
+        public void setColor(Color chosenColor) { Color = chosenColor; }
         public void SetTranslate(float x, float y, float z)
         {
             Translate[0] = x;
@@ -54,41 +51,24 @@ namespace Demo
             Scale[1] = sy;
             Scale[2] = sz;
         }
+        public void setSelected(bool value) { isSelected = value; }
 
-        public void setSelected(bool value)
-        {
-            isSelected = value;
-        }
-
-        public Color GetColor()
-        {
-            return this.Color;
-        }
-
-        public float[] GetTranslate()
-        {
-            return Translate;
-        }
-        public float[] GetRotate()
-        {
-            return Rotate;
-        }
-
-        public float[] GetScale()
-        {
-            return Scale;
-        }
+        public Color GetColor() { return this.Color; }
+        public float[] GetTranslate() { return Translate;}
+        public float[] GetRotate() { return Rotate; }
+        public float[] GetScale() { return Scale;}
 
         public virtual int Draw(OpenGL gl) { return 0; }
+        public virtual float GetLength() { return 0; }
+        public virtual float GetHeight() { return 0; }
+        public virtual void SetLength(float length) {}
+        public virtual void SetHeight(float height) {}
     }
 
     class Cube : Geometry
     {
-        public float Length;
-        public Cube(Color color, float length) : base(color)
-        {
-            Length = length;
-        }
+        private float Length;
+        public Cube(Color color, float length) : base(color) { Length = length; }
 
         public override int Draw(OpenGL gl)
         {
@@ -163,12 +143,18 @@ namespace Demo
             gl.PopMatrix();
             return 1;
         }
+
+        public override float GetLength() { return Length; }
+
+        public override float GetHeight() { return Length; }
+
+        public override void SetLength(float length) { Length = length; }
     }
 
     class Pyramid : Geometry
     {
-        public float Length;
-        public float Height;
+        private float Length;
+        private float Height;
         public Pyramid(Color color, float length, float height) : base(color)
         {
             Length = length;
@@ -250,12 +236,20 @@ namespace Demo
             gl.PopMatrix();
             return 1;
         }
+
+        public override float GetLength() { return Length; }
+
+        public override float GetHeight() { return Height; }
+
+        public override void SetLength(float length) { Length = length; }
+
+        public override void SetHeight(float height) { Height = height; }
     }
 
     class Prismatic : Geometry
     {
-        public float Length;
-        public float Height;
+        private float Length;
+        private float Height;
         public Prismatic(Color color, float length, float height) : base(color)
         {
             Length = length;
@@ -337,5 +331,14 @@ namespace Demo
             gl.PopMatrix();
             return 1;
         }
+
+        public override float GetLength() { return Length; }
+
+        public override float GetHeight() { return Height; }
+
+        public override void SetLength(float length) { Length = length; }
+
+        public override void SetHeight(float height) { Height = height; }
     }
+
 }

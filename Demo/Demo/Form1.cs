@@ -36,18 +36,28 @@ namespace Demo
             colorPanel.BackColor = colorDialog1.Color;
             countLabels.Text = Geometries.Count().ToString();
             gridSizeTextBox.Text = GridSize.ToString();
-
         }
 
         private void Enable(bool notzero)
         {
+            lengthTextBox.Enabled = notzero;
+            heightTextBox.Enabled = notzero;
+
             rotateXTrackbar.Enabled = notzero;
             rotateYTrackbar.Enabled = notzero;
             rotateZTrackbar.Enabled = notzero;
 
+            rotateXTextBox.Enabled = notzero;
+            rotateYTextBox.Enabled = notzero;
+            rotateZTextBox.Enabled = notzero;
+
             scaleXTrackbar.Enabled = notzero;
             scaleYTrackbar.Enabled = notzero;
             scaleZTrackbar.Enabled = notzero;
+
+            scaleXTextBox.Enabled = notzero;
+            scaleYTextBox.Enabled = notzero;
+            scaleZTextBox.Enabled = notzero;
 
             transXTextBox.Enabled = notzero;
             transYTextBox.Enabled = notzero;
@@ -167,11 +177,24 @@ namespace Demo
         private void GeometriesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedIndex = GeometriesListBox.SelectedIndex;
+            objectNameLabel.Text = GeometriesListBox.SelectedItem.ToString();
+
             float[] rtmp = Geometries[SelectedIndex].GetRotate();
             float[] stmp = Geometries[SelectedIndex].GetScale();
             float[] ttmp = Geometries[SelectedIndex].GetTranslate();
             colorDialog1.Color = Geometries[SelectedIndex].GetColor();
             colorPanel.BackColor = colorDialog1.Color;
+
+            if(objectNameLabel.Text == "CUBE")
+            {
+                lengthTextBox.Text = Geometries[SelectedIndex].GetLength().ToString();
+                heightTextBox.Text = Geometries[SelectedIndex].GetLength().ToString();
+            }
+            else
+            {
+                lengthTextBox.Text = Geometries[SelectedIndex].GetLength().ToString();
+                heightTextBox.Text = Geometries[SelectedIndex].GetHeight().ToString();
+            }
 
             if (PreSelectedIndex != SelectedIndex)
             {
@@ -194,8 +217,6 @@ namespace Demo
             rotateXTrackbar.Value = (int)rtmp[0];
             scaleXTrackbar.Value = (int)(stmp[0] * 100);
             transXTextBox.Text = ((int)ttmp[0]).ToString();
-
-
         }
 
         private void rotateTrackbar_ValueChanged(object sender, EventArgs e)
@@ -231,28 +252,12 @@ namespace Demo
                 e.Handled = true;
         }
 
-        private void transTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!isLoading)
-            {
-                if (transXTextBox.Text == "")
-                    transXTextBox.Text = "0";
-                if (transYTextBox.Text == "")
-                    transYTextBox.Text = "0";
-                if (transZTextBox.Text == "")
-                    transZTextBox.Text = "0";
-
-                if (transXTextBox.Text != "-" && transYTextBox.Text != "-" && transZTextBox.Text != "-")
-                    Geometries[SelectedIndex].SetTranslate(float.Parse(transXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(transYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(transZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
-            }
-        }
-
         private void gridSizeTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
             {
-                if (gridSizeTextBox.Text == "")
-                    gridSizeTextBox.Text = "0";
+                if (gridSizeTextBox.Text == "" || gridSizeTextBox.Text == "-")
+                    return;
                 GridSize = Int32.Parse(gridSizeTextBox.Text);
             }
         }
@@ -261,15 +266,10 @@ namespace Demo
         {
             if (e.KeyData == Keys.Enter)
             {
-                if (transXTextBox.Text == "")
-                    transXTextBox.Text = "0";
-                if (transYTextBox.Text == "")
-                    transYTextBox.Text = "0";
-                if (transZTextBox.Text == "")
-                    transZTextBox.Text = "0";
+                if (transXTextBox.Text == "" || transYTextBox.Text == "" || transZTextBox.Text == "" || transXTextBox.Text == "-" || transYTextBox.Text == "-" || transZTextBox.Text == "-")
+                    return;
 
-                if (transXTextBox.Text != "-" && transYTextBox.Text != "-" && transZTextBox.Text != "-")
-                    Geometries[SelectedIndex].SetTranslate(float.Parse(transXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(transYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(transZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
+                Geometries[SelectedIndex].SetTranslate(float.Parse(transXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(transYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(transZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
             }
         }
 
@@ -277,12 +277,8 @@ namespace Demo
         {
             if (e.KeyData == Keys.Enter)
             {
-                if (camXTextBox.Text == "")
-                    camXTextBox.Text = "0";
-                if (camYTextBox.Text == "")
-                    camYTextBox.Text = "0";
-                if (camZTextBox.Text == "")
-                    camZTextBox.Text = "0";
+                if (camXTextBox.Text == "" || camYTextBox.Text == "" || camZTextBox.Text == "" || camXTextBox.Text == "-" || camYTextBox.Text == "-" || camZTextBox.Text == "-")
+                    return;
 
                 cameraPosition[0] = float.Parse(camXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat);
                 cameraPosition[1] = float.Parse(camYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat);
@@ -296,8 +292,7 @@ namespace Demo
             if (e.KeyData == Keys.Enter)
             {
                 if (viewAngleTextBox.Text == "")
-                    camXTextBox.Text = "60";
-
+                    return;
                 cameraAngle = (float)Int32.Parse(viewAngleTextBox.Text);
             }
         }
@@ -330,7 +325,7 @@ namespace Demo
                 float y = cameraPosition[1] - viewPosition[1];
 
                 //rotate alpha around Oz
-                cameraPosition[0] = (float)(x* Math.Cos(alpha) - y* Math.Sin(alpha));
+                cameraPosition[0] = (float)(x * Math.Cos(alpha) - y * Math.Sin(alpha));
                 cameraPosition[1] = (float)(x * Math.Sin(alpha) + y * Math.Cos(alpha));
 
                 //translate to orginal position
@@ -415,6 +410,82 @@ namespace Demo
             {
                 colorPanel.BackColor = colorDialog1.Color;
                 Geometries[SelectedIndex].setColor(colorDialog1.Color);
+            }
+        }
+
+        private void rotateTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (rotateXTextBox.Text == "" || Int32.Parse(rotateXTextBox.Text) < -360 || Int32.Parse(rotateXTextBox.Text) > 360)
+                    return;
+                if (rotateYTextBox.Text == "" || Int32.Parse(rotateYTextBox.Text) < -360 || Int32.Parse(rotateYTextBox.Text) > 360)
+                    return;
+                if (rotateZTextBox.Text == "" || Int32.Parse(rotateZTextBox.Text) < -360 || Int32.Parse(rotateZTextBox.Text) > 360)
+                    return;
+
+                rotateXTrackbar.Value = Int32.Parse(rotateXTextBox.Text);
+                rotateYTrackbar.Value = Int32.Parse(rotateYTextBox.Text);
+                rotateZTrackbar.Value = Int32.Parse(rotateZTextBox.Text);
+
+                Geometries[SelectedIndex].SetRotate(float.Parse(rotateXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+                                                    float.Parse(rotateYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+                                                    float.Parse(rotateZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
+
+
+            }
+        }
+
+        private void scaleTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (scaleXTextBox.Text == "-" || scaleXTextBox.Text == "" || float.Parse(scaleXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) < 0 || float.Parse(scaleXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) > 10)
+                    return;
+                if (scaleYTextBox.Text == "-" || scaleYTextBox.Text == "" || float.Parse(scaleYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) < 0 || float.Parse(scaleYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) > 10)
+                    return;
+                if (scaleZTextBox.Text == "-" || scaleZTextBox.Text == "" || float.Parse(scaleZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) < 0 || float.Parse(scaleZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) > 10)
+                    return;
+
+                scaleXTrackbar.Value = (int)(float.Parse(scaleXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) * 100);
+                scaleYTrackbar.Value = (int)(float.Parse(scaleYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) * 100);
+                scaleZTrackbar.Value = (int)(float.Parse(scaleZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) * 100);
+
+                Geometries[SelectedIndex].SetScale(float.Parse(scaleXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+                                                    float.Parse(scaleYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat),
+                                                    float.Parse(scaleZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
+
+
+            }
+        }
+
+        private void lengthTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (lengthTextBox.Text == "-" || lengthTextBox.Text == "" || float.Parse(lengthTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) < 0)
+                    return;
+
+                Geometries[SelectedIndex].SetLength(float.Parse(lengthTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
+                if (objectNameLabel.Text == "CUBE")
+                    heightTextBox.Text = lengthTextBox.Text;
+            }
+        }
+
+        private void heightTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (heightTextBox.Text == "-" || heightTextBox.Text == "" || float.Parse(heightTextBox.Text, CultureInfo.InvariantCulture.NumberFormat) < 0)
+                    return;
+
+                if (objectNameLabel.Text != "CUBE")
+                    Geometries[SelectedIndex].SetHeight(float.Parse(heightTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
+                else
+                {
+                    Geometries[SelectedIndex].SetLength(float.Parse(heightTextBox.Text, CultureInfo.InvariantCulture.NumberFormat));
+                    lengthTextBox.Text = heightTextBox.Text;
+                }
             }
         }
     }

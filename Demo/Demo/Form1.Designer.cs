@@ -75,6 +75,11 @@
             this.colorPanel = new System.Windows.Forms.Panel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.label19 = new System.Windows.Forms.Label();
+            this.objectNameLabel = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.lengthTextBox = new System.Windows.Forms.TextBox();
+            this.heightTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotateXTrackbar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotateYTrackbar)).BeginInit();
@@ -178,30 +183,36 @@
             // 
             // rotateXTextBox
             // 
+            this.rotateXTextBox.Enabled = false;
             this.rotateXTextBox.Location = new System.Drawing.Point(947, 344);
             this.rotateXTextBox.Name = "rotateXTextBox";
-            this.rotateXTextBox.ReadOnly = true;
             this.rotateXTextBox.Size = new System.Drawing.Size(29, 20);
             this.rotateXTextBox.TabIndex = 9;
             this.rotateXTextBox.Text = "0";
+            this.rotateXTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transTextBox_KeyPress);
+            this.rotateXTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rotateTextBox_KeyUp);
             // 
             // rotateYTextBox
             // 
+            this.rotateYTextBox.Enabled = false;
             this.rotateYTextBox.Location = new System.Drawing.Point(947, 382);
             this.rotateYTextBox.Name = "rotateYTextBox";
-            this.rotateYTextBox.ReadOnly = true;
             this.rotateYTextBox.Size = new System.Drawing.Size(29, 20);
             this.rotateYTextBox.TabIndex = 10;
             this.rotateYTextBox.Text = "0";
+            this.rotateYTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transTextBox_KeyPress);
+            this.rotateYTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rotateTextBox_KeyUp);
             // 
             // rotateZTextBox
             // 
+            this.rotateZTextBox.Enabled = false;
             this.rotateZTextBox.Location = new System.Drawing.Point(947, 419);
             this.rotateZTextBox.Name = "rotateZTextBox";
-            this.rotateZTextBox.ReadOnly = true;
             this.rotateZTextBox.Size = new System.Drawing.Size(29, 20);
             this.rotateZTextBox.TabIndex = 11;
             this.rotateZTextBox.Text = "0";
+            this.rotateZTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transTextBox_KeyPress);
+            this.rotateZTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rotateTextBox_KeyUp);
             // 
             // label1
             // 
@@ -301,30 +312,36 @@
             // 
             // scaleZTextBox
             // 
+            this.scaleZTextBox.Enabled = false;
             this.scaleZTextBox.Location = new System.Drawing.Point(947, 568);
             this.scaleZTextBox.Name = "scaleZTextBox";
-            this.scaleZTextBox.ReadOnly = true;
             this.scaleZTextBox.Size = new System.Drawing.Size(29, 20);
             this.scaleZTextBox.TabIndex = 21;
             this.scaleZTextBox.Text = "0";
+            this.scaleZTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transTextBox_KeyPress);
+            this.scaleZTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.scaleTextBox_KeyUp);
             // 
             // scaleYTextBox
             // 
+            this.scaleYTextBox.Enabled = false;
             this.scaleYTextBox.Location = new System.Drawing.Point(947, 531);
             this.scaleYTextBox.Name = "scaleYTextBox";
-            this.scaleYTextBox.ReadOnly = true;
             this.scaleYTextBox.Size = new System.Drawing.Size(29, 20);
             this.scaleYTextBox.TabIndex = 20;
             this.scaleYTextBox.Text = "0";
+            this.scaleYTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transTextBox_KeyPress);
+            this.scaleYTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.scaleTextBox_KeyUp);
             // 
             // scaleXTextBox
             // 
+            this.scaleXTextBox.Enabled = false;
             this.scaleXTextBox.Location = new System.Drawing.Point(947, 493);
             this.scaleXTextBox.Name = "scaleXTextBox";
-            this.scaleXTextBox.ReadOnly = true;
             this.scaleXTextBox.Size = new System.Drawing.Size(29, 20);
             this.scaleXTextBox.TabIndex = 19;
             this.scaleXTextBox.Text = "0";
+            this.scaleXTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transTextBox_KeyPress);
+            this.scaleXTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.scaleTextBox_KeyUp);
             // 
             // scaleZTrackbar
             // 
@@ -607,12 +624,75 @@
             this.label19.Text = "Color";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // objectNameLabel
+            // 
+            this.objectNameLabel.AutoSize = true;
+            this.objectNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.objectNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.objectNameLabel.Location = new System.Drawing.Point(788, 142);
+            this.objectNameLabel.Name = "objectNameLabel";
+            this.objectNameLabel.Size = new System.Drawing.Size(107, 20);
+            this.objectNameLabel.TabIndex = 49;
+            this.objectNameLabel.Text = "ObjectName";
+            this.objectNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Black;
+            this.label20.Location = new System.Drawing.Point(790, 179);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(51, 16);
+            this.label20.TabIndex = 50;
+            this.label20.Text = "Length:";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.Black;
+            this.label21.Location = new System.Drawing.Point(883, 179);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(50, 16);
+            this.label21.TabIndex = 51;
+            this.label21.Text = "Height:";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lengthTextBox
+            // 
+            this.lengthTextBox.Enabled = false;
+            this.lengthTextBox.Location = new System.Drawing.Point(843, 175);
+            this.lengthTextBox.MaxLength = 5;
+            this.lengthTextBox.Name = "lengthTextBox";
+            this.lengthTextBox.Size = new System.Drawing.Size(29, 20);
+            this.lengthTextBox.TabIndex = 52;
+            this.lengthTextBox.Text = "0";
+            this.lengthTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lengthTextBox_KeyUp);
+            // 
+            // heightTextBox
+            // 
+            this.heightTextBox.Enabled = false;
+            this.heightTextBox.Location = new System.Drawing.Point(936, 175);
+            this.heightTextBox.MaxLength = 5;
+            this.heightTextBox.Name = "heightTextBox";
+            this.heightTextBox.Size = new System.Drawing.Size(29, 20);
+            this.heightTextBox.TabIndex = 53;
+            this.heightTextBox.Text = "0";
+            this.heightTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.heightTextBox_KeyUp);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(980, 611);
+            this.Controls.Add(this.heightTextBox);
+            this.Controls.Add(this.lengthTextBox);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.objectNameLabel);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.colorPanel);
             this.Controls.Add(this.viewAngleTextBox);
@@ -724,6 +804,11 @@
         private System.Windows.Forms.Panel colorPanel;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label objectNameLabel;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox lengthTextBox;
+        private System.Windows.Forms.TextBox heightTextBox;
     }
 }
 
