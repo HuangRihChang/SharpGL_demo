@@ -36,6 +36,7 @@ namespace Demo
             colorPanel.BackColor = colorDialog1.Color;
             countLabels.Text = Geometries.Count().ToString();
             gridSizeTextBox.Text = GridSize.ToString();
+            GeometriesListBox.DrawMode = DrawMode.OwnerDrawFixed;
         }
 
         private void Enable(bool notzero)
@@ -185,7 +186,7 @@ namespace Demo
             colorDialog1.Color = Geometries[SelectedIndex].GetColor();
             colorPanel.BackColor = colorDialog1.Color;
 
-            if(objectNameLabel.Text == "CUBE")
+            if (objectNameLabel.Text == "CUBE")
             {
                 lengthTextBox.Text = Geometries[SelectedIndex].GetLength().ToString();
                 heightTextBox.Text = Geometries[SelectedIndex].GetLength().ToString();
@@ -217,6 +218,7 @@ namespace Demo
             rotateXTrackbar.Value = (int)rtmp[0];
             scaleXTrackbar.Value = (int)(stmp[0] * 100);
             transXTextBox.Text = ((int)ttmp[0]).ToString();
+            GeometriesListBox.Invalidate();
         }
 
         private void rotateTrackbar_ValueChanged(object sender, EventArgs e)
@@ -299,18 +301,18 @@ namespace Demo
 
         private void openGLControl1_KeyDown(object sender, KeyEventArgs e)
         {
-            float alpha = ((float)2.0 / 180) * PI;
+            float alpha = ((float)1.0 / 180) * PI;
 
             if (e.KeyData == Keys.Z)
             {
-                cameraAngle -= (float)10.0;
+                cameraAngle -= (float)1.0;
                 if (cameraAngle <= 0)
                     cameraAngle = 1;
                 viewAngleTextBox.Text = ((int)cameraAngle).ToString();
             }
             if (e.KeyData == Keys.X)
             {
-                cameraAngle += (float)10.0;
+                cameraAngle += (float)1.0;
                 if (cameraAngle >= 180)
                     cameraAngle = 179;
                 viewAngleTextBox.Text = ((int)cameraAngle).ToString();
@@ -487,6 +489,37 @@ namespace Demo
                     lengthTextBox.Text = heightTextBox.Text;
                 }
             }
+        }
+
+        private void viewTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (viewXTextBox.Text == "" || viewYTextBox.Text == "" || viewZTextBox.Text == "" || viewXTextBox.Text == "-" || viewYTextBox.Text == "-" || viewZTextBox.Text == "-")
+                    return;
+
+                float X = float.Parse(viewXTextBox.Text, CultureInfo.InvariantCulture.NumberFormat);
+                float Y = float.Parse(viewYTextBox.Text, CultureInfo.InvariantCulture.NumberFormat);
+                float Z = float.Parse(viewZTextBox.Text, CultureInfo.InvariantCulture.NumberFormat);
+
+                if (X == cameraPosition[0] && Y == cameraPosition[1])
+                    return;
+
+                viewPosition[0] = X;
+                viewPosition[1] = Y;
+                viewPosition[2] = Z;
+            }
+        }
+
+        private void DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index == SelectedIndex)
+            {
+                e.DrawBackground();
+                e.Graphics.DrawString(GeometriesListBox.Items[e.Index].ToString(), new Font("Microsoft Sans Serif", 8, FontStyle.Bold), Brushes.Black, e.Bounds);
+            }
+            else
+                e.Graphics.DrawString(GeometriesListBox.Items[e.Index].ToString(), new Font("Microsoft Sans Serif", 8, FontStyle.Regular), Brushes.Black, e.Bounds);
         }
     }
 }
